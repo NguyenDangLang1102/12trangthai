@@ -18,6 +18,25 @@
   <a-table bordered :data-source="listUser.listUser" :columns="columns">
     <template #bodyCell="{ column, record }">
       <template  class="put" v-if="column.dataIndex === 'operation'">
+
+          <span class="btn">
+                    <a-button type="primary" shape="circle" :size="size">
+                        <template #icon>
+                            <delete-outlined />
+                        </template>
+                    </a-button>
+
+                    <a-button type="primary" shape="circle" :size="size">
+                        <template #icon>
+                            <edit-outlined />
+                        </template>
+                    </a-button>
+                </span>
+
+
+
+
+
         <div class>
         <a  @click="handlePut(record)">
           <a>PUT</a>
@@ -128,6 +147,13 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
+
+.btn {
+    display: flex;
+    justify-content: space-around;
+}
+
+
 .editable-cell {
   position: relative;
   .editable-cell-input-wrapper,

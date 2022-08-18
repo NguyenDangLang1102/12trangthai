@@ -1,28 +1,41 @@
 <template>
-<div class="input"> 
-  <a-input class="text" v-model:value="nameStatus" placeholder="nhap name status" />
-  <a-input  class="text" v-model:value="level" placeholder="nhap level" />
+  <div class="input">
+    <a-input class="text" v-model:value="nameStatus" placeholder="nhap name status" />
+    <a-input class="text" v-model:value="level" placeholder="nhap level" />
   </div>
   <div class="buton">
-  <a-button class="editable-add-btn butonAdd" style="margin-top:10px" @click="handleAdd(nameStatus,level)">Add</a-button>
-  <a-button class="editable-add-btn" style="margin-top:10px" @click="handleUpdate(nameStatus,level,id_Status)">Update</a-button></div>
+    <a-button class="editable-add-btn butonAdd" style="margin-top:10px" @click="handleAdd(nameStatus, level)">Add
+    </a-button>
+    <a-button class="editable-add-btn" style="margin-top:10px" @click="handleUpdate(nameStatus, level, id_Status)">Update
+    </a-button>
+  </div>
   <p>Danh sach Stutus</p>
   <a-table bordered :data-source="listStatus.listItem" :columns="columns">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
+        <span>
+          <a-button type="primary" shape="circle" :size="size">
+            <template #icon>
+              <edit-outlined />
+            </template>
+          </a-button>
+        </span>
+
+        
         <a @click="handlePut(record)">
           <a>PUT</a>
         </a>
+
+
       </template>
     </template>
   </a-table>
 </template>
 <script>
-import { computed, defineComponent, reactive, ref ,onMounted} from 'vue';
+import { computed, defineComponent, reactive, ref, onMounted } from 'vue';
 import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
-// import { cloneDeep } from 'lodash-es';
-import {useStoreStatus} from '../../reducer/statusReducer'
-import{getDataStatus,addDataStatus,updateDataStatus} from'../../saga/itemSaga'
+import { useStoreStatus } from '../../reducer/statusReducer'
+import { getDataStatus, addDataStatus, updateDataStatus } from '../../saga/itemSaga'
 export default defineComponent({
   components: {
     CheckOutlined,
@@ -30,10 +43,10 @@ export default defineComponent({
   },
   setup() {
     const listStatus = useStoreStatus()
-   onMounted(()=> {getDataStatus()})
-    const nameStatus=ref('')
-    const level=ref('')
-    const id_Status=ref('')
+    onMounted(() => { getDataStatus() })
+    const nameStatus = ref('')
+    const level = ref('')
+    const id_Status = ref('')
     const columns = [{
       title: 'STT',
       dataIndex: 'id_Status',
@@ -48,9 +61,9 @@ export default defineComponent({
       title: 'operation',
       dataIndex: 'operation',
     }];
-    const data=[];
-    for(let i=0; i<listStatus.length;i++){
-      
+    const data = [];
+    for (let i = 0; i < listStatus.length; i++) {
+
     }
     const dataSource = ref(listStatus.listItem);
     const count = computed(() => dataSource.value.length + 1);
@@ -59,23 +72,23 @@ export default defineComponent({
       columns,
       dataSource,
       editableData,
-      count,  
+      count,
       listStatus,
       nameStatus,
       level,
       id_Status
     };
   },
-  methods:{
-    handleAdd(nameStatus,level){
-      addDataStatus({nameStatus:nameStatus,level:level})
+  methods: {
+    handleAdd(nameStatus, level) {
+      addDataStatus({ nameStatus: nameStatus, level: level })
 
     },
-    handlePut(record){
-      this.nameStatus=record.nameStatus,this.level=record.level,this.id_Status=record.id_Status
+    handlePut(record) {
+      this.nameStatus = record.nameStatus, this.level = record.level, this.id_Status = record.id_Status
     },
-    handleUpdate(nameStatus,level,id_Status){
-      updateDataStatus({nameStatus:nameStatus,level:level,id_Status:id_Status})
+    handleUpdate(nameStatus, level, id_Status) {
+      updateDataStatus({ nameStatus: nameStatus, level: level, id_Status: id_Status })
     }
   },
 
@@ -85,6 +98,7 @@ export default defineComponent({
 <style lang="less">
 .editable-cell {
   position: relative;
+
   .editable-cell-input-wrapper,
   .editable-cell-text-wrapper {
     padding-right: 24px;
@@ -120,29 +134,36 @@ export default defineComponent({
     margin-bottom: 8px;
   }
 }
+
 .editable-cell:hover .editable-cell-icon {
   display: inline-block;
 }
-.buton{
+
+.buton {
   display: flex;
-  flex-direction:row-reverse;
+  flex-direction: row-reverse;
 }
-.input{
+
+.input {
   display: flex;
   justify-content: space-around;
 }
-.butonAdd{
+
+.butonAdd {
   margin-left: 10px;
 }
-.editable-add-btn{
+
+.editable-add-btn {
   margin-bottom: 8px;
 }
-p{
+
+p {
   text-align: center;
-  
+
 }
-.text{
-  width: 300px!important;
+
+.text {
+  width: 300px !important;
   border-radius: 15px;
 }
 </style>

@@ -1,39 +1,47 @@
 <template>
-<div class="input"> 
-  <a-input class="text" v-model:value="name_User" placeholder="nhap name user" />
-  <a-space>
-    <a-select
-      ref="select"
-      v-model:value="id_Status"
-      style="width: 120px"
-      @focus="focus"
-      @change="handleChange"
-    >
-      <a-select-option v-for="(item,key) in listID.$state.listItem" :key="key" :value="item.id_Status">{{item.nameStatus}}</a-select-option>
-    </a-select>
-  </a-space>
+  <div class="input">
+    <a-input class="text" v-model:value="name_User" placeholder="nhap name user" />
+    <a-space>
+      <a-select ref="select" v-model:value="id_Status" style="width: 120px" @focus="focus" @change="handleChange">
+        <a-select-option v-for="(item, key) in listID.$state.listItem" :key="key" :value="item.id_Status">
+          {{ item.nameStatus }}</a-select-option>
+      </a-select>
+    </a-space>
   </div>
   <div class="buton">
-  <a-button class="editable-add-btn" style="margin-top:10px" @click="handleUpdate(name_User,id_Status,id_User)">Update</a-button></div>
+    <a-button class="editable-add-btn" style="margin-top:10px" @click="handleUpdate(name_User, id_Status, id_User)">Update
+    </a-button>
+  </div>
   <p>Danh sach User</p>
   <a-table bordered :data-source="listUser.listUser" :columns="columns">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
+
+        <span>
+          <a-button type="primary" shape="circle" :size="size">
+            <template #icon>
+              <edit-outlined />
+            </template>
+          </a-button>
+        </span>
+
+
+
         <a @click="handlePut(record)">
           <a>PUT</a>
         </a>
       </template>
     </template>
   </a-table>
-  <router-view/>
+  <router-view />
 </template>
 <script>
-import { computed, defineComponent, reactive, ref,onMounted } from 'vue';
+import { computed, defineComponent, reactive, ref, onMounted } from 'vue';
 import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
-import {useStoreUser} from '../../reducer/userReducer'
-import {useStoreStatus} from '../../reducer/statusReducer'
-import{getDataUserHr,updateDataUserOne} from'../../saga/userSaga'
-import{getDataStatus} from'../../saga/itemSaga'
+import { useStoreUser } from '../../reducer/userReducer'
+import { useStoreStatus } from '../../reducer/statusReducer'
+import { getDataUserHr, updateDataUserOne } from '../../saga/userSaga'
+import { getDataStatus } from '../../saga/itemSaga'
 
 export default defineComponent({
   components: {
@@ -42,15 +50,15 @@ export default defineComponent({
   },
   setup() {
     const listUser = useStoreUser()
-    const listID=useStoreStatus()
-    onMounted(() => {getDataUserHr(),getDataStatus()})
-    const nameStatus=ref('')
-    const level=ref('')
-    const id_User=ref('')
-    const name_User=ref('')
-    const id_Status=ref('')
-    const data=ref([])
-    console.log(data,"ghjkl")
+    const listID = useStoreStatus()
+    onMounted(() => { getDataUserHr(), getDataStatus() })
+    const nameStatus = ref('')
+    const level = ref('')
+    const id_User = ref('')
+    const name_User = ref('')
+    const id_Status = ref('')
+    const data = ref([])
+    console.log(data, "ghjkl")
     const columns = [{
       title: 'STT',
       dataIndex: 'id_User',
@@ -60,7 +68,7 @@ export default defineComponent({
       width: '15%',
 
       dataIndex: 'name_User',
-    }, 
+    },
     {
       title: 'level',
       width: '15%',
@@ -89,14 +97,14 @@ export default defineComponent({
       data
     };
   },
- 
-  methods:{
-    handlePut(record){
-        console.log(record,"dai va")
-      this.name_User=record.name_User,this.id_Status=record.id_Status,this.id_User=record.id_User
+
+  methods: {
+    handlePut(record) {
+      console.log(record, "dai va")
+      this.name_User = record.name_User, this.id_Status = record.id_Status, this.id_User = record.id_User
     },
-    handleUpdate(name_User,id_Status,id_User){
-      updateDataUserOne({name_User:name_User,id_Status:id_Status,id_User:id_User})
+    handleUpdate(name_User, id_Status, id_User) {
+      updateDataUserOne({ name_User: name_User, id_Status: id_Status, id_User: id_User })
     }
   },
 });
@@ -104,6 +112,7 @@ export default defineComponent({
 <style lang="less">
 .editable-cell {
   position: relative;
+
   .editable-cell-input-wrapper,
   .editable-cell-text-wrapper {
     padding-right: 24px;
@@ -139,29 +148,36 @@ export default defineComponent({
     margin-bottom: 8px;
   }
 }
+
 .editable-cell:hover .editable-cell-icon {
   display: inline-block;
 }
-.buton{
+
+.buton {
   display: flex;
-  flex-direction:row-reverse;
+  flex-direction: row-reverse;
 }
-.input{
+
+.input {
   display: flex;
   justify-content: space-around;
 }
-.butonAdd{
+
+.butonAdd {
   margin-left: 10px;
 }
-.editable-add-btn{
+
+.editable-add-btn {
   margin-bottom: 8px;
 }
-p{
+
+p {
   text-align: center;
-  
+
 }
-.text{
-  width: 300px!important;
+
+.text {
+  width: 300px !important;
   border-radius: 15px !important;
 }
 </style>
