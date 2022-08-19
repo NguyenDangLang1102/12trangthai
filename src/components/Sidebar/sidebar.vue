@@ -29,9 +29,15 @@
           <team-outlined  />
           <span class="nav-text">Role</span>
         </a-menu-item>
+
         <a-menu-item key="5">
           <idcard-outlined />
           <span class="nav-text">Account</span>
+        </a-menu-item>
+
+      <a-menu-item key="6">
+          <logout-outlined />
+          <span class="nav-text">LogOut</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -49,11 +55,11 @@
   </a-layout>
 </template>
 <script>
-import { PieChartOutlined, DesktopOutlined, UserOutlined, TeamOutlined, IdcardOutlined,ContactsOutlined,ImportOutlined } from '@ant-design/icons-vue';
+import { PieChartOutlined, DesktopOutlined, UserOutlined, TeamOutlined, IdcardOutlined,ContactsOutlined,ImportOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   components: {
-    PieChartOutlined, DesktopOutlined, UserOutlined, TeamOutlined, IdcardOutlined,ContactsOutlined,ImportOutlined
+    PieChartOutlined, DesktopOutlined, UserOutlined, TeamOutlined, IdcardOutlined,ContactsOutlined,ImportOutlined,LogoutOutlined
   },
 
   setup() {
