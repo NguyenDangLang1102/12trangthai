@@ -2,7 +2,7 @@
   <a-layout>
     <a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint">
       <div class="logo">
-        <div class="avatar"><img src="https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg" class="avatar-img" /></div>
+        <div class="avatar"><img src="https://hinhanhdephd.com/wp-content/uploads/2015/12/hinh-anh-dep-girl-xinh-hinh-nen-dep-gai-xinh.jpg" class="avatar-img" /></div>
         <h1 class="text-avatar">welcome</h1>
       </div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
@@ -25,15 +25,15 @@
           </router-link>
 
         </a-menu-item>
-        <a-menu-item key="4">
+        <!-- <a-menu-item key="4">
           <team-outlined  />
           <span class="nav-text">Role</span>
-        </a-menu-item>
+        </a-menu-item> -->
 
-        <a-menu-item key="5">
+        <!-- <a-menu-item key="5">
           <idcard-outlined />
           <span class="nav-text">Account</span>
-        </a-menu-item>
+        </a-menu-item> -->
 
       <a-menu-item key="6">
           <logout-outlined />

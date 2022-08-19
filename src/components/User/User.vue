@@ -18,22 +18,17 @@
   <a-table bordered :data-source="listUser.listUser" :columns="columns">
     <template #bodyCell="{ column, record }">
       <template  class="put" v-if="column.dataIndex === 'operation'">
+        <a-button  @click="handlePut(record)" type="primary" shape="circle" :size="size">
+            <template #icon>
+              <edit-outlined />
+            </template>
+          </a-button>
 
-          <span class="btn">
-                    <a-button  @click="handlePut(record)" type="primary" shape="circle" :size="size">
-                        <template #icon>
-                            <delete-outlined />
-                        </template>
-                    </a-button>
-
-                    <a-button   @click="handleDelete(record.id_User)" type="primary" shape="circle" :size="size">
-                        <template #icon>
-                            <edit-outlined />
-                        </template>
-                    </a-button>
-                </span>
-
-    
+          <a-button  @click="handleDelete(record)" type="primary" shape="circle" :size="size">
+            <template #icon>
+              <delete-outlined />
+            </template>
+          </a-button>
       </template>
     </template>
   </a-table>
@@ -41,7 +36,7 @@
 </template>
 <script>
 import { computed, defineComponent, reactive, ref,onMounted } from 'vue';
-import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
+import { CheckOutlined, EditOutlined , DeleteOutlined } from '@ant-design/icons-vue';
 import {useStoreUser} from '../../reducer/userReducer'
 import {useStoreStatus} from '../../reducer/statusReducer'
 import{getDataUser,addDataUser,updateDataUser,deleteDataUser} from'../../saga/userSaga'
@@ -51,6 +46,7 @@ export default defineComponent({
   components: {
     CheckOutlined,
     EditOutlined,
+    DeleteOutlined
   },
   setup() {
     const listUser = useStoreUser()
@@ -134,13 +130,6 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
-
-.btn {
-    display: flex;
-    justify-content: space-around;
-}
-
-
 .editable-cell {
   position: relative;
   .editable-cell-input-wrapper,

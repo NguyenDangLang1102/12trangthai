@@ -20,11 +20,6 @@
             </template>
           </a-button>
         </span>
-
-        
-       
-
-
       </template>
     </template>
   </a-table>
@@ -59,10 +54,12 @@ export default defineComponent({
       title: 'operation',
       dataIndex: 'operation',
     }];
-    const data = [];
-    for (let i = 0; i < listStatus.length; i++) {
+    // console.log(dataSource,"data")
+    // const data = [];
+    // for (let i = 0; i < listStatus.listItem.length; i++) {
 
-    }
+
+    // }
     const dataSource = ref(listStatus.listItem);
     const count = computed(() => dataSource.value.length + 1);
     const editableData = reactive({});

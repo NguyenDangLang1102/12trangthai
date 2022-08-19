@@ -18,18 +18,12 @@
       <template v-if="column.dataIndex === 'operation'">
 
         <span>
-          <a-button type="primary" shape="circle" :size="size">
+          <a-button @click="handlePut(record)" type="primary" shape="circle" :size="size">
             <template #icon>
               <edit-outlined />
             </template>
           </a-button>
         </span>
-
-
-
-        <a @click="handlePut(record)">
-          <a>PUT</a>
-        </a>
       </template>
     </template>
   </a-table>
