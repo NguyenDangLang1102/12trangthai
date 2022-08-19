@@ -6,19 +6,19 @@
         <h1 class="text-avatar">welcome</h1>
       </div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-          <a-menu-item key="1">
+          <a-menu-item key="status">
             <router-link :to="{ name: 'status' }">
               <pie-chart-outlined />
               <span class="nav-text">Status</span>
             </router-link>
           </a-menu-item> 
-        <a-menu-item key="2">
+        <a-menu-item key="user">
           <router-link :to="{ name: 'user' }">
             <user-outlined />
             <span class="nav-text">User</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="3">
+        <a-menu-item key="hr">
           <router-link :to="{ name: 'hr' }">
             <contacts-outlined />
             <span class="nav-text">Chia Số</span>
@@ -57,12 +57,15 @@
 <script>
 import { PieChartOutlined, DesktopOutlined, UserOutlined, TeamOutlined, IdcardOutlined,ContactsOutlined,ImportOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
+import{useMenu} from'../../stores/history';
+import {storeToRefs}from 'pinia'
 export default defineComponent({
   components: {
     PieChartOutlined, DesktopOutlined, UserOutlined, TeamOutlined, IdcardOutlined,ContactsOutlined,ImportOutlined,LogoutOutlined
   },
 
   setup() {
+    const useMenu1=useMenu()
     const onCollapse = (collapsed, type) => {
       console.log(collapsed, type);
     };
@@ -72,9 +75,9 @@ export default defineComponent({
     };
 
     return {
-      selectedKeys: ref(['4']),
+      ...storeToRefs(useMenu1),
       onCollapse,
-      onBreakpoint,
+      onBreakpoint
     };
   },
 
@@ -126,5 +129,11 @@ export default defineComponent({
 .ant-layout-sider-children {
   height: 100vh !important;
 
+}
+.ant-layout-sider ant-layout-sider-dark{
+      /* flex: 0 0 200px; */
+    /* max-width: 300px !important; */
+    min-width: 300px !important;
+    /* width: 300px !important; */
 }
 </style>

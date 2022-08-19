@@ -1,15 +1,15 @@
 <template >
-    <Narbar />
+    <!-- <Narbar /> -->
     <router-view />
 </template>
 <script>
-import Narbar from './router/index'
+// import Narbar from './router/index'
 
 
 export default {
     name: "App",
     components: {
-        Narbar
+        // Narbar 
     }
 }
 </script>

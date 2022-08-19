@@ -15,7 +15,7 @@
   <a-button class="editable-add-btn butonAdd" style="margin-top:10px" @click="handleAdd(name_User,id_Status)">Add</a-button>
   <a-button class="editable-add-btn" style="margin-top:10px" @click="handleUpdate(name_User,id_Status,id_User)">Update</a-button></div>
   <p>Danh sach User</p>
-  <a-table bordered :data-source="listUser.listUser" :columns="columns">
+  <a-table bordered :data-source="dataSource" :columns="columns">
     <template #bodyCell="{ column, record }">
       <template  class="put" v-if="column.dataIndex === 'operation'">
         <a-button  @click="handlePut(record)" type="primary" shape="circle" :size="size">
@@ -41,6 +41,7 @@ import {useStoreUser} from '../../reducer/userReducer'
 import {useStoreStatus} from '../../reducer/statusReducer'
 import{getDataUser,addDataUser,updateDataUser,deleteDataUser} from'../../saga/userSaga'
 import{getDataStatus} from'../../saga/itemSaga'
+import{useMenu} from'../../stores/history';
 
 export default defineComponent({
   components: {
@@ -49,6 +50,7 @@ export default defineComponent({
     DeleteOutlined
   },
   setup() {
+    useMenu().onSelectedKeys(['user'])
     const listUser = useStoreUser()
     const listID=useStoreStatus()
     onMounted(() => {getDataUser(),getDataStatus()})
@@ -60,12 +62,11 @@ export default defineComponent({
     const data=ref([])
     const columns = [{
       title: 'STT',
-      dataIndex: 'id_User',
-      width: '20%',
+      dataIndex: 'key',
+      width: '15%',
     }, {
       title: 'name_User',
       width: '15%',
-
       dataIndex: 'name_User',
     }, 
     {
@@ -81,7 +82,7 @@ export default defineComponent({
     },
      {
       title: 'date',
-      width: '20%',
+      width: '25%',
       dataIndex: 'updated_At',
     }, 
     {
@@ -89,7 +90,14 @@ export default defineComponent({
       width: '35%',
       dataIndex: 'operation',
     }];
-    const dataSource = ref(listUser.listUser);
+    const dataSource=computed(()=>listUser.listUser.map((item,key)=>({
+    key:key+1,
+    id_User:item.id_User,
+    name_User:item.name_User,
+    hr_Hold:item.hr_Hold,
+    level:item.level,
+    updated_At:item.updated_At
+   })))
     const count = computed(() => dataSource.value.length + 1);
     const editableData = reactive({});
     return {

@@ -2,6 +2,7 @@
   <div class="input">
     <a-input class="text" v-model:value="nameStatus" placeholder="nhap name status" />
     <a-input class="text" v-model:value="level" placeholder="nhap level" />
+    <!-- <p>{{log}}</p> -->
   </div>
   <div class="buton">
     <a-button class="editable-add-btn butonAdd" style="margin-top:10px" @click="handleAdd(nameStatus, level)">Add
@@ -10,11 +11,11 @@
     </a-button>
   </div>
   <p>Danh sach Stutus</p>
-  <a-table bordered :data-source="listStatus.listItem" :columns="columns">
+  <a-table bordered :data-source="dataSource" :columns="columns">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
         <span>
-          <a-button  @click="handlePut(record)" type="primary" shape="circle" :size="size">
+          <a-button  @click="handlePut(record)" type="primary" shape="circle">
             <template #icon>
               <edit-outlined />
             </template>
@@ -29,12 +30,15 @@ import { computed, defineComponent, reactive, ref, onMounted } from 'vue';
 import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
 import { useStoreStatus } from '../../reducer/statusReducer'
 import { getDataStatus, addDataStatus, updateDataStatus } from '../../saga/itemSaga'
+import{useMenu} from'../../stores/history';
+
 export default defineComponent({
   components: {
     CheckOutlined,
     EditOutlined,
   },
   setup() {
+    useMenu().onSelectedKeys(['status'])
     const listStatus = useStoreStatus()
     onMounted(() => { getDataStatus() })
     const nameStatus = ref('')
@@ -42,7 +46,7 @@ export default defineComponent({
     const id_Status = ref('')
     const columns = [{
       title: 'STT',
-      dataIndex: 'id_Status',
+      dataIndex: 'key',
       width: '30%',
     }, {
       title: 'nameStatus',
@@ -54,13 +58,12 @@ export default defineComponent({
       title: 'operation',
       dataIndex: 'operation',
     }];
-    // console.log(dataSource,"data")
-    // const data = [];
-    // for (let i = 0; i < listStatus.listItem.length; i++) {
-
-
-    // }
-    const dataSource = ref(listStatus.listItem);
+   const dataSource=computed(()=>listStatus.listItem.map((item,key)=>({
+    key:key+1,
+    id_Status:item.id_Status,
+    nameStatus:item.nameStatus,
+    level:item.level
+   })))
     const count = computed(() => dataSource.value.length + 1);
     const editableData = reactive({});
     return {
@@ -71,7 +74,7 @@ export default defineComponent({
       listStatus,
       nameStatus,
       level,
-      id_Status
+      id_Status, 
     };
   },
   methods: {

@@ -13,12 +13,12 @@
     </a-button>
   </div>
   <p>Danh sach User</p>
-  <a-table bordered :data-source="listUser.listUser" :columns="columns">
+  <a-table bordered :data-source="dataSource" :columns="columns">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
 
         <span>
-          <a-button @click="handlePut(record)" type="primary" shape="circle" :size="size">
+          <a-button @click="handlePut(record)" type="primary" shape="circle" >
             <template #icon>
               <edit-outlined />
             </template>
@@ -36,6 +36,7 @@ import { useStoreUser } from '../../reducer/userReducer'
 import { useStoreStatus } from '../../reducer/statusReducer'
 import { getDataUserHr, updateDataUserOne } from '../../saga/userSaga'
 import { getDataStatus } from '../../saga/itemSaga'
+import{useMenu} from'../../stores/history';
 
 export default defineComponent({
   components: {
@@ -43,6 +44,7 @@ export default defineComponent({
     EditOutlined,
   },
   setup() {
+    useMenu().onSelectedKeys(['hr'])
     const listUser = useStoreUser()
     const listID = useStoreStatus()
     onMounted(() => { getDataUserHr(), getDataStatus() })
@@ -52,15 +54,13 @@ export default defineComponent({
     const name_User = ref('')
     const id_Status = ref('')
     const data = ref([])
-    console.log(data, "ghjkl")
     const columns = [{
       title: 'STT',
-      dataIndex: 'id_User',
+      dataIndex: 'key',
       width: '20%',
     }, {
       title: 'name_User',
       width: '15%',
-
       dataIndex: 'name_User',
     },
     {
@@ -73,7 +73,12 @@ export default defineComponent({
       width: '35%',
       dataIndex: 'operation',
     }];
-    const dataSource = ref(listUser.listUser);
+    const dataSource = computed(() => listUser.listUser.map((item,key)=>({ 
+      key:key+1,
+      id_User:item.id_User,
+      name_User:item.name_User,
+      level:item.level
+    })))
     const count = computed(() => dataSource.value.length + 1);
     const editableData = reactive({});
     return {
@@ -142,34 +147,28 @@ export default defineComponent({
     margin-bottom: 8px;
   }
 }
-
 .editable-cell:hover .editable-cell-icon {
   display: inline-block;
 }
-
 .buton {
   display: flex;
   flex-direction: row-reverse;
 }
-
 .input {
   display: flex;
   justify-content: space-around;
 }
-
 .butonAdd {
   margin-left: 10px;
 }
-
 .editable-add-btn {
   margin-bottom: 8px;
 }
-
-p {
+p 
+{
   text-align: center;
 
 }
-
 .text {
   width: 300px !important;
   border-radius: 15px !important;
