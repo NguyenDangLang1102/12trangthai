@@ -20,33 +20,20 @@
       <template  class="put" v-if="column.dataIndex === 'operation'">
 
           <span class="btn">
-                    <a-button type="primary" shape="circle" :size="size">
+                    <a-button  @click="handlePut(record)" type="primary" shape="circle" :size="size">
                         <template #icon>
                             <delete-outlined />
                         </template>
                     </a-button>
 
-                    <a-button type="primary" shape="circle" :size="size">
+                    <a-button   @click="handleDelete(record.id_User)" type="primary" shape="circle" :size="size">
                         <template #icon>
                             <edit-outlined />
                         </template>
                     </a-button>
                 </span>
 
-
-
-
-
-        <div class>
-        <a  @click="handlePut(record)">
-          <a>PUT</a>
-        </a>
-        </div>
-         <div class>
-        <a  @click="handleDelete(record.id_User)">
-          <a>Delete</a>
-        </a>
-        </div>
+    
       </template>
     </template>
   </a-table>
